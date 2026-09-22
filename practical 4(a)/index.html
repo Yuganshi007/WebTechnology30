@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Practical 4A - Form Validation</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 400px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Registration Form</h2>
+
+    <form id="registrationForm">
+
+        <label>Name:</label>
+        <input type="text" id="name">
+        <p id="nameError" class="error"></p>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <p id="emailError" class="error"></p>
+
+        <label>Password:</label>
+        <input type="password" id="password">
+        <p id="passwordError" class="error"></p>
+
+        <label>Phone Number:</label>
+        <input type="text" id="phone">
+        <p id="phoneError" class="error"></p>
+
+        <button type="submit">Register</button>
+
+        <p id="success" class="success"></p>
+
+    </form>
+
+</div>
+
+<script>
+
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+    let phone = document.getElementById("phone").value.trim();
+
+    let valid = true;
+
+    
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = "";
+    document.getElementById("phoneError").innerHTML = "";
+    document.getElementById("success").innerHTML = "";
+
+    
+    if (name === "") {
+        document.getElementById("nameError").innerHTML =
+            "Name is required.";
+        valid = false;
+    }
+    else if (name.length < 3) {
+        document.getElementById("nameError").innerHTML =
+            "Name must contain at least 3 characters.";
+        valid = false;
+    }
+
+    
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === "") {
+        document.getElementById("emailError").innerHTML =
+            "Email is required.";
+        valid = false;
+    }
+    else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerHTML =
+            "Enter a valid email address.";
+        valid = false;
+    }
+
+    
+    if (password === "") {
+        document.getElementById("passwordError").innerHTML =
+            "Password is required.";
+        valid = false;
+    }
+    else if (password.length < 6) {
+        document.getElementById("passwordError").innerHTML =
+            "Password must contain at least 6 characters.";
+        valid = false;
+    }
+
+    
+    let phonePattern = /^[0-9]{10}$/;
+
+    if (phone === "") {
+        document.getElementById("phoneError").innerHTML =
+            "Phone number is required.";
+        valid = false;
+    }
+    else if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").innerHTML =
+            "Phone number must contain exactly 10 digits.";
+        valid = false;
+    }
+
+    
+    if (valid) {
+        document.getElementById("success").innerHTML =
+            "Registration successful!";
+
+        document.getElementById("registrationForm").reset();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
